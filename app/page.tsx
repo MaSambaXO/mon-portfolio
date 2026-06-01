@@ -15,7 +15,7 @@ type Project = {
 const BIO =
   "Diplômé d'un DN MADE Graphisme à Gobelins Paris, je développe une pratique du design orientée vers la direction artistique, l'identité visuelle et la narration. À travers mes projets, j'explore les liens entre image, culture et contexte afin de concevoir des univers cohérents et porteurs de sens.";
 
-const INFO_PHOTO = "/projets/maphoto-1.jpg";
+const INFO_PHOTO = "/projets/Maphoto-1.jpg";
 
 const SKILLS = [
   "Direction artistique",
@@ -55,7 +55,7 @@ const PROJECTS: Project[] = [
       "L'identité visuelle et l'interface ont été conçues pour reproduire l'esthétique rassurante des plateformes contemporaines tout en révélant progressivement l'absurdité et la violence des situations qu'elles présentent. Le projet questionne la manière dont les produits numériques influencent notre perception des enjeux sociaux.",
     ],
     role: ["Direction artistique", "Graphisme", "Web design"],
-    images: ["/projets/bedless-1.png","/projets/bedless-2.png","/projets/bedless-3.png","/projets/bedless-4.png","/projets/bedless-5.png","/projets/bedless-6.png","/projets/bedless-7.png"],
+    images: ["/projets/Bedless-1.png","/projets/Bedless-2.png","/projets/Bedless-3.png","/projets/Bedless-4.png","/projets/Bedless-5.png","/projets/Bedless-6.png","/projets/Bedless-7.png"],
   },
 
   {
