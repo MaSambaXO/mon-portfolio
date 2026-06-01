@@ -15,7 +15,7 @@ type Project = {
 const BIO =
   "Diplômé d'un DN MADE Graphisme à Gobelins Paris, je développe une pratique du design orientée vers la direction artistique, l'identité visuelle et la narration. À travers mes projets, j'explore les liens entre image, culture et contexte afin de concevoir des univers cohérents et porteurs de sens.";
 
-const INFO_PHOTO = "/projets/maphoto-1.jpg";
+const INFO_PHOTO = "/projets/Maphoto-1.jpg";
 
 const SKILLS = [
   "Direction artistique",
@@ -55,7 +55,7 @@ const PROJECTS: Project[] = [
       "L'identité visuelle et l'interface ont été conçues pour reproduire l'esthétique rassurante des plateformes contemporaines tout en révélant progressivement l'absurdité et la violence des situations qu'elles présentent. Le projet questionne la manière dont les produits numériques influencent notre perception des enjeux sociaux.",
     ],
     role: ["Direction artistique", "Graphisme", "Web design"],
-    images: ["/projets/bedless-1.png","/projets/bedless-2.png","/projets/bedless-3.png","/projets/bedless-4.png","/projets/bedless-5.png","/projets/bedless-6.png","/projets/bedless-7.png"],
+    images: ["/projets/Bedless-1.png","/projets/Bedless-2.png","/projets/Bedless-3.png","/projets/Bedless-4.png","/projets/Bedless-5.png","/projets/Bedless-6.png","/projets/Bedless-7.png"],
   },
 
   {
@@ -114,7 +114,9 @@ const PROJECTS: Project[] = [
   },
 ];
 
-const COLS: React.CSSProperties = { gridTemplateColumns: "1fr 2fr 1fr 1fr" };
+const COLS:      React.CSSProperties = { gridTemplateColumns: "1fr 2fr 1fr 1fr" };
+const INFO_COLS: React.CSSProperties = { gridTemplateColumns: "1fr 3fr 1fr" };
+const CV_IMAGE = "/projets/CV transparent.png";
 
 function ContactBlock({ stopProp = false }: { stopProp?: boolean }) {
   const stop = stopProp
@@ -392,20 +394,22 @@ export default function Home() {
       {/* ── INFO ── */}
       {view === "info" && (
         <>
-          {/* Desktop grid */}
-          <div className="hidden md:grid md:flex-1 px-5 pt-3 overflow-hidden" style={COLS}>
-            <div className="flex items-center">
+          {/* Desktop grid — 1fr 3fr 1fr : photo+bio | CV centré | contact */}
+          <div className="hidden md:grid md:flex-1 px-5 pt-3 overflow-hidden" style={INFO_COLS}>
+            <div className="flex flex-col justify-center gap-6 pr-4">
               {INFO_PHOTO ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={INFO_PHOTO} alt="" className="w-36 h-44 object-cover" />
               ) : (
                 <div className={`w-36 h-44 ${photo}`} />
               )}
+              <p className="leading-relaxed">{BIO}</p>
             </div>
-            <div className="col-span-2 flex items-center justify-center">
-              <p className="leading-relaxed max-w-xs">{BIO}</p>
+            <div className="flex items-center justify-center overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={CV_IMAGE} alt="" className="max-h-full max-w-full object-contain" />
             </div>
-            <div>
+            <div className="pl-4">
               <ContactBlock />
             </div>
           </div>
