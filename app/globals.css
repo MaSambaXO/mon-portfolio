@@ -16,3 +16,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-ibm-plex-mono), monospace;
 }
+
+a, button {
+  cursor: pointer;
+}
