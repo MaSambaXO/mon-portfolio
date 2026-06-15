@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 type View = "home" | "project" | "info";
 
 type Project = {
   name: string;
+  subtitle: string;
   date: string;
   description: string[];
   role: string[];
@@ -49,6 +50,7 @@ const CONTACT: ContactItem[] = [
 const PROJECTS: Project[] = [
   {
     name: "Bedless",
+    subtitle: "Branding & UX/UI",
     date: "Février 2025",
     description: [
       "Bedless est un projet de design spéculatif qui interroge la crise du logement à travers le prisme des plateformes numériques. En détournant les codes visuels et les mécaniques de réservation d'applications comme Airbnb ou Booking, le projet imagine un futur dans lequel l'accès à un lit devient un service marchandisé, évalué et optimisé.",
@@ -60,6 +62,7 @@ const PROJECTS: Project[] = [
 
   {
     name: "Next Station Chatelet",
+    subtitle: "Branding",
     date: "Janvier 2026",
     description: [
       "NSC est l'identité visuelle d'une organisation esport fictive inspirée de la culture urbaine parisienne, des réseaux de transport et du streetwear contemporain.",
@@ -71,6 +74,7 @@ const PROJECTS: Project[] = [
 
   {
     name: "Breathe!",
+    subtitle: "UX/UI",
     date: "Juin 2023",
     description: [
       "Breathe! est un projet européen de médiation culturelle autour des objets africains conservés dans les collections de musées européens. J'ai été chargé par l'association Alter-Natives de réaliser le site du projet.",
@@ -82,6 +86,7 @@ const PROJECTS: Project[] = [
 
   {
     name: "Mémoire",
+    subtitle: "Recherche & Conceptualisation",
     date: "Janvier 2025",
     description: [
       "Strive est un projet de mémoire autour des interfaces diégétiques dans les jeux vidéo de science-fiction. Inspiré par des œuvres comme Mirror's Edge, Dead Space ou Cyberpunk 2077, le projet explore la manière dont une interface peut participer à la construction d'un univers plutôt que se limiter à transmettre de l'information.",
@@ -93,6 +98,7 @@ const PROJECTS: Project[] = [
 
   {
     name: "Explor'émoi",
+    subtitle: "Recherche & Conceptualisation",
     date: "Octobre 2025",
     description: [
       "Explor'Émoi est un projet de médiation numérique conçu pour le tiers-lieu Comme Vous Émoi à Montreuil. Le projet réinvente la découverte d'un espace culturel à travers les codes du jeu vidéo et de la narration interactive.",
@@ -104,6 +110,7 @@ const PROJECTS: Project[] = [
 
   {
     name: "Cloud Temple",
+    subtitle: "Alternance UX/UI & Graphisme",
     date: "Décembre 2023 / Juillet 2025",
     description: [
       "Cloud Temple est une entreprise française spécialisée dans le cloud et la cybersécurité. Durant deux années d'alternance, j'ai participé à l'évolution de son écosystème digital à travers des projets de web design, de communication visuelle et d'identité de marque.",
@@ -142,11 +149,33 @@ function ContactBlock({ stopProp = false }: { stopProp?: boolean }) {
   );
 }
 
+function ProjectList({ onOpen }: { onOpen: (i: number) => void }) {
+  return (
+    <ul>
+      {PROJECTS.map((p, i) => (
+        <li key={i}>
+          <button
+            onClick={() => onOpen(i)}
+            className="text-left group mb-1"
+          >
+            <div className="text-[20px] leading-tight group-hover:opacity-60 transition-opacity">
+              {p.name}
+            </div>
+            <div className="text-[11px] group-hover:opacity-60 transition-opacity">
+              {p.subtitle}
+            </div>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function Home() {
   const [view, setView] = useState<View>("home");
   const [active, setActive] = useState(0);
   const [imgIdx, setImgIdx] = useState(0);
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
 
   const openProject = (i: number) => {
     setActive(i);
@@ -154,15 +183,25 @@ export default function Home() {
     setView("project");
   };
 
-  const prev = () => {
+  const prev = useCallback(() => {
     const len = PROJECTS[active].images.length;
     setImgIdx((n) => (n - 1 + len) % len);
-  };
+  }, [active]);
 
-  const next = () => {
+  const next = useCallback(() => {
     const len = PROJECTS[active].images.length;
     setImgIdx((n) => (n + 1) % len);
-  };
+  }, [active]);
+
+  useEffect(() => {
+    if (view !== "project") return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [view, prev, next]);
 
   const bg    = dark ? "bg-black text-white" : "bg-white text-black";
   const photo = dark ? "bg-zinc-800"         : "bg-zinc-300";
@@ -247,22 +286,11 @@ export default function Home() {
           </div>
 
           <div className="px-5 pb-5 pt-2 shrink-0 flex justify-between items-end">
-            <div className="text-[13px]">
-              <div className="mb-2">Projets :</div>
-              <ul>
-                {PROJECTS.map((p, i) => (
-                  <li key={i}>
-                    <button
-                      onClick={() => openProject(i)}
-                      className="text-left hover:opacity-60"
-                    >
-                      {p.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+            <div>
+              <div className="text-[13px] mb-2">Projets :</div>
+              <ProjectList onOpen={openProject} />
             </div>
-            <div>©Ma-Samba Dia. All Rights Reserved.</div>
+            <div className="text-[11px] shrink-0 ml-4">©Ma-Samba Dia. All Rights Reserved.</div>
           </div>
         </>
       )}
@@ -427,21 +455,10 @@ export default function Home() {
           </div>
 
           <div className="px-5 pb-5 pt-2 shrink-0 flex justify-between items-end">
-            <div className="text-[13px]">
-              <ul>
-                {PROJECTS.map((p, i) => (
-                  <li key={i}>
-                    <button
-                      onClick={() => openProject(i)}
-                      className="text-left hover:opacity-60"
-                    >
-                      {p.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+            <div>
+              <ProjectList onOpen={openProject} />
             </div>
-            <div>©Ma-Samba Dia. All Rights Reserved.</div>
+            <div className="text-[11px] shrink-0 ml-4">©Ma-Samba Dia. All Rights Reserved.</div>
           </div>
         </>
       )}
