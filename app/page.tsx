@@ -177,6 +177,11 @@ export default function Home() {
   const [imgIdx, setImgIdx] = useState(0);
   const [dark, setDark] = useState(false);
 
+  useEffect(() => {
+    const srcs = [INFO_PHOTO, ...PROJECTS.flatMap(p => p.images)];
+    srcs.forEach(src => { const img = new window.Image(); img.src = src; });
+  }, []);
+
   const openProject = (i: number) => {
     setActive(i);
     setImgIdx(0);
