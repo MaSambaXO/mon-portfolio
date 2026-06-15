@@ -16,7 +16,7 @@ type Project = {
 const BIO =
   "Diplômé d'un DN MADE Graphisme à Gobelins Paris, je développe une pratique du design orientée vers la direction artistique, l'identité visuelle et la narration. À travers mes projets, j'explore les liens entre image, culture et contexte afin de concevoir des univers cohérents et porteurs de sens.";
 
-const INFO_PHOTO = "/projets/Maphoto-1.jpg";
+const INFO_PHOTO = "/projets/Maphoto-1.webp";
 
 const SKILLS = [
   "Direction artistique",
@@ -57,7 +57,7 @@ const PROJECTS: Project[] = [
       "L'identité visuelle et l'interface ont été conçues pour reproduire l'esthétique rassurante des plateformes contemporaines tout en révélant progressivement l'absurdité et la violence des situations qu'elles présentent. Le projet questionne la manière dont les produits numériques influencent notre perception des enjeux sociaux.",
     ],
     role: ["Direction artistique", "Graphisme", "Web design"],
-    images: ["/projets/Bedless-1.png","/projets/Bedless-2.png","/projets/Bedless-3.png","/projets/Bedless-4.png","/projets/Bedless-5.png","/projets/Bedless-6.png","/projets/Bedless-7.png"],
+    images: ["/projets/Bedless-1.webp","/projets/Bedless-2.webp","/projets/Bedless-3.webp","/projets/Bedless-4.webp","/projets/Bedless-5.webp","/projets/Bedless-6.webp","/projets/Bedless-7.webp"],
   },
 
   {
@@ -69,7 +69,7 @@ const PROJECTS: Project[] = [
       "Le projet combine branding, design graphique et direction artistique afin de construire un système visuel capable d'exister sur différents supports. Chaque élément a été pensé pour créer une identité forte, reconnaissable et ancrée dans un contexte culturel spécifique.",
     ],
     role: ["Direction artistique", "Graphisme"],
-    images: ["/projets/NSC-2.png","/projets/NSC-3.png","/projets/NSC-4.png","/projets/NSC-5.png","/projets/NSC-6.png","/projets/NSC-7.png"],
+    images: ["/projets/NSC-2.webp","/projets/NSC-3.webp","/projets/NSC-4.webp","/projets/NSC-5.webp","/projets/NSC-6.webp","/projets/NSC-7.webp"],
   },
 
   {
@@ -81,7 +81,7 @@ const PROJECTS: Project[] = [
       "Développé en collaboration avec une graphiste senior, le site transpose l'identité visuelle du projet dans un environnement numérique accessible, lisible et responsive. L'objectif était de valoriser les contenus pédagogiques et les recherches du programme à travers une expérience de consultation claire et engageante.",
     ],
     role: ["Web design"],
-    images: ["/projets/Breathe-1.png","/projets/Breathe-2.png","/projets/Breathe-3.png","/projets/Breathe-4.png"],
+    images: ["/projets/Breathe-1.webp","/projets/Breathe-2.webp","/projets/Breathe-3.webp","/projets/Breathe-4.webp"],
   },
 
   {
@@ -93,7 +93,7 @@ const PROJECTS: Project[] = [
       "À travers la conception d'un jeu fictif, d'interfaces et de systèmes visuels, Strive cherche à intégrer la narration, le gameplay et l'identité visuelle dans une expérience cohérente.",
     ],
     role: ["Recherche", "Direction artistique", "Game design"],
-    images: ["/projets/Strive-1.png","/projets/Strive-2.png","/projets/Strive-3.png","/projets/Strive-4.png"],
+    images: ["/projets/Strive-1.webp","/projets/Strive-2.webp","/projets/Strive-3.webp","/projets/Strive-4.webp"],
   },
 
   {
@@ -105,7 +105,7 @@ const PROJECTS: Project[] = [
       "L'expérience prend la forme d'un visual novel dans lequel les visiteurs rencontrent différents personnages associés aux espaces et activités du lieu. Le projet explore la manière dont le design interactif peut transformer l'information en expérience.",
     ],
     role: ["Recherche", "Branding", "Web design"],
-    images: ["/projets/Explor'Emoi-1.png","/projets/Explor'Emoi-2.png","/projets/Explor'Emoi-3.png","/projets/Explor'Emoi-4.png"],
+    images: ["/projets/Explor'Emoi-1.webp","/projets/Explor'Emoi-2.webp","/projets/Explor'Emoi-3.webp","/projets/Explor'Emoi-4.webp"],
   },
 
   {
@@ -117,7 +117,7 @@ const PROJECTS: Project[] = [
       "Mes missions ont notamment porté sur la conception de pages web, la refonte du système de navigation du site, la création de présentations de marque et la production de contenus pour les réseaux sociaux. Ces projets ont été développés en collaboration avec les équipes marketing, UX et communication.",
     ],
     role: ["Web design", "Graphisme"],
-    images: ["/projets/CloudTemple-1.png","/projets/CloudTemple-2.png","/projets/CloudTemple-3.png","/projets/CloudTemple-4.png","/projets/CloudTemple-5.png"],
+    images: ["/projets/CloudTemple-1.webp","/projets/CloudTemple-2.webp","/projets/CloudTemple-3.webp","/projets/CloudTemple-4.webp","/projets/CloudTemple-5.webp"],
   },
 ];
 
