@@ -247,7 +247,7 @@ export default function Home() {
           </button>
           <button
             className="text-left hover:opacity-60 underline"
-            onClick={() => setView(view === "info" ? "home" : "info")}
+            onClick={() => setView("info")}
           >
             info
           </button>
