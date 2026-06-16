@@ -184,6 +184,7 @@ export default function Home() {
   useEffect(() => {
     const color = dark ? "#000000" : "#ffffff";
     document.documentElement.style.background = color;
+    document.body.style.background = color;
     let meta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
     if (!meta) {
       meta = document.createElement("meta");
@@ -225,7 +226,7 @@ export default function Home() {
   const currentImage = PROJECTS[active].images[imgIdx] ?? null;
   const totalImages = PROJECTS[active].images.length;
 
-  const mobileHeight = view === "home" ? "h-screen overflow-hidden" : "min-h-screen";
+  const mobileHeight = view === "home" ? "h-[100dvh] overflow-hidden" : "min-h-screen";
 
   return (
     <div className={`${mobileHeight} md:h-screen md:overflow-hidden flex flex-col ${bg} text-[11px] leading-[1.4]`}>
@@ -266,7 +267,7 @@ export default function Home() {
         <button className="hover:opacity-60" onClick={() => setView("home")}>
           Ma-Samba DIA
         </button>
-        <button className="hover:opacity-60" onClick={() => setView(view === "info" ? "home" : "info")}>
+        <button className="hover:opacity-60 underline" onClick={() => setView(view === "info" ? "home" : "info")}>
           info
         </button>
         <button className="hover:opacity-60" onClick={() => setDark(!dark)}>
@@ -425,18 +426,24 @@ export default function Home() {
       {/* ── INFO ── */}
       {view === "info" && (
         <>
-          {/* Desktop : photo + bio + contact sous le bio */}
-          <div className="hidden md:flex md:flex-1 px-5 pt-8 gap-10 items-start overflow-hidden">
-            {INFO_PHOTO ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={INFO_PHOTO} alt="" className="w-36 h-44 object-cover shrink-0" />
-            ) : (
-              <div className={`w-36 h-44 shrink-0 ${photo}`} />
-            )}
-            <div className="flex flex-col gap-6 max-w-sm">
-              <p className="leading-relaxed">{BIO}</p>
-              <ContactBlock />
+          {/* Desktop : grille 3 col — photo | bio+contact centré | vide */}
+          <div
+            className="hidden md:grid md:flex-1 px-5 pt-3 overflow-hidden"
+            style={{ gridTemplateColumns: "1fr 2fr 1fr" }}
+          >
+            <div className="flex items-center">
+              {INFO_PHOTO ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={INFO_PHOTO} alt="" className="w-36 h-44 object-cover" />
+              ) : (
+                <div className={`w-36 h-44 ${photo}`} />
+              )}
             </div>
+            <div className="flex flex-col justify-center gap-4">
+              <p className="leading-relaxed">{BIO}</p>
+              <div><ContactBlock /></div>
+            </div>
+            <div />
           </div>
 
           {/* Mobile : photo + bio + contact, sans liste projets */}
@@ -450,7 +457,7 @@ export default function Home() {
               )}
               <p className="leading-relaxed">{BIO}</p>
             </div>
-            <ContactBlock />
+            <div><ContactBlock /></div>
           </div>
 
           {/* Bottom — copyright seulement */}
