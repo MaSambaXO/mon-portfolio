@@ -293,7 +293,7 @@ export default function Home() {
           </div>
 
           {/* Mobile stack — sans contact */}
-          <div className="flex flex-col md:hidden px-5 pt-3 gap-6 overflow-hidden">
+          <div className="flex flex-col md:hidden px-5 pt-3 gap-6">
             <p className="leading-relaxed">{BIO}</p>
             <div>
               {SKILLS.map((s) => (
@@ -302,19 +302,24 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="px-5 pb-5 pt-2 shrink-0 flex justify-between items-end">
-            <div>
-              <div className="text-[13px] mb-2">Projets :</div>
-              {/* Desktop */}
-              <div className="hidden md:block">
-                <ProjectList onOpen={openProject} />
+          <div className="px-5 pb-5 pt-2 shrink-0">
+            <div className="flex justify-between items-end">
+              <div>
+                <div className="text-[13px] mb-2">Projets :</div>
+                {/* Desktop */}
+                <div className="hidden md:block">
+                  <ProjectList onOpen={openProject} />
+                </div>
+                {/* Mobile — shortName pour NSC */}
+                <div className="md:hidden">
+                  <ProjectList onOpen={openProject} mobile />
+                </div>
               </div>
-              {/* Mobile — shortName pour NSC */}
-              <div className="md:hidden">
-                <ProjectList onOpen={openProject} mobile />
-              </div>
+              {/* Copyright desktop — même ligne que projets */}
+              <div className="hidden md:block text-[11px] shrink-0 ml-4">©Ma-Samba Dia. All Rights Reserved.</div>
             </div>
-            <div className="text-[11px] shrink-0 ml-4">©Ma-Samba Dia. All Rights Reserved.</div>
+            {/* Copyright mobile — sa propre ligne */}
+            <div className="md:hidden text-[11px] text-center mt-6">©Ma-Samba Dia. All Rights Reserved.</div>
           </div>
         </>
       )}
@@ -426,11 +431,8 @@ export default function Home() {
       {/* ── INFO ── */}
       {view === "info" && (
         <>
-          {/* Desktop : grille 3 col — photo | bio+contact centré | vide */}
-          <div
-            className="hidden md:grid md:flex-1 px-5 pt-3 overflow-hidden"
-            style={{ gridTemplateColumns: "1fr 2fr 1fr" }}
-          >
+          {/* Desktop : grille 4 col — photo | bio+contact centré (col-span-2) | vide */}
+          <div className="hidden md:grid md:flex-1 px-5 pt-3 overflow-hidden" style={COLS}>
             <div className="flex items-center">
               {INFO_PHOTO ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -439,9 +441,11 @@ export default function Home() {
                 <div className={`w-36 h-44 ${photo}`} />
               )}
             </div>
-            <div className="flex flex-col justify-center gap-4">
-              <p className="leading-relaxed">{BIO}</p>
-              <div><ContactBlock /></div>
+            <div className="col-span-2 flex flex-col items-center justify-center">
+              <div className="max-w-xs w-full flex flex-col gap-3">
+                <p className="leading-relaxed">{BIO}</p>
+                <div><ContactBlock /></div>
+              </div>
             </div>
             <div />
           </div>
