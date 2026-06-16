@@ -6,6 +6,7 @@ type View = "home" | "project" | "info";
 
 type Project = {
   name: string;
+  shortName?: string;
   subtitle: string;
   date: string;
   description: string[];
@@ -62,6 +63,7 @@ const PROJECTS: Project[] = [
 
   {
     name: "Next Station Chatelet",
+    shortName: "NSC",
     subtitle: "Branding",
     date: "Janvier 2026",
     description: [
@@ -149,17 +151,14 @@ function ContactBlock({ stopProp = false }: { stopProp?: boolean }) {
   );
 }
 
-function ProjectList({ onOpen }: { onOpen: (i: number) => void }) {
+function ProjectList({ onOpen, mobile = false }: { onOpen: (i: number) => void; mobile?: boolean }) {
   return (
     <ul>
       {PROJECTS.map((p, i) => (
         <li key={i}>
-          <button
-            onClick={() => onOpen(i)}
-            className="text-left group mb-1"
-          >
-            <div className="text-[20px] leading-tight group-hover:opacity-60 transition-opacity">
-              {p.name}
+          <button onClick={() => onOpen(i)} className="text-left group mb-1">
+            <div className="text-[20px] leading-tight underline group-hover:opacity-60 transition-opacity">
+              {mobile && p.shortName ? p.shortName : p.name}
             </div>
             <div className="text-[11px] group-hover:opacity-60 transition-opacity">
               {p.subtitle}
@@ -181,6 +180,18 @@ export default function Home() {
     const srcs = [INFO_PHOTO, ...PROJECTS.flatMap(p => p.images)];
     srcs.forEach(src => { const img = new window.Image(); img.src = src; });
   }, []);
+
+  useEffect(() => {
+    const color = dark ? "#000000" : "#ffffff";
+    document.documentElement.style.background = color;
+    let meta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "theme-color");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", color);
+  }, [dark]);
 
   const openProject = (i: number) => {
     setActive(i);
@@ -214,45 +225,48 @@ export default function Home() {
   const currentImage = PROJECTS[active].images[imgIdx] ?? null;
   const totalImages = PROJECTS[active].images.length;
 
+  const mobileHeight = view === "home" ? "h-screen overflow-hidden" : "min-h-screen";
+
   return (
-    <div
-      className={`min-h-screen md:h-screen md:overflow-hidden flex flex-col ${bg} text-[11px] leading-[1.4]`}
-    >
-      {/* ── NAV desktop ── */}
-      <nav className="hidden md:grid shrink-0 px-5 py-3 text-[13px]" style={COLS}>
-        <button
-          className="text-left hover:opacity-60"
-          onClick={() => setView("home")}
-        >
-          Ma-Samba DIA
-        </button>
-        <button
-          className="text-left hover:opacity-60"
-          onClick={() => setView(view === "info" ? "home" : "info")}
-        >
-          info
-        </button>
-        <span>Compétences</span>
-        <div className="flex justify-between">
-          <span>Contact</span>
+    <div className={`${mobileHeight} md:h-screen md:overflow-hidden flex flex-col ${bg} text-[11px] leading-[1.4]`}>
+
+      {/* ── NAV desktop — simplifié sur info ── */}
+      {view === "info" ? (
+        <nav className="hidden md:flex shrink-0 px-5 py-3 text-[13px] justify-between">
+          <button className="hover:opacity-60" onClick={() => setView("home")}>
+            Ma-Samba DIA
+          </button>
           <button className="hover:opacity-60" onClick={() => setDark(!dark)}>
             sombre·clair
           </button>
-        </div>
-      </nav>
+        </nav>
+      ) : (
+        <nav className="hidden md:grid shrink-0 px-5 py-3 text-[13px]" style={COLS}>
+          <button className="text-left hover:opacity-60" onClick={() => setView("home")}>
+            Ma-Samba DIA
+          </button>
+          <button
+            className="text-left hover:opacity-60 underline"
+            onClick={() => setView(view === "info" ? "home" : "info")}
+          >
+            info
+          </button>
+          <span>Compétences</span>
+          <div className="flex justify-between">
+            <span>Contact</span>
+            <button className="hover:opacity-60" onClick={() => setDark(!dark)}>
+              sombre·clair
+            </button>
+          </div>
+        </nav>
+      )}
 
       {/* ── NAV mobile ── */}
       <nav className="flex md:hidden shrink-0 px-5 py-3 text-[13px] justify-between">
-        <button
-          className="hover:opacity-60"
-          onClick={() => setView("home")}
-        >
+        <button className="hover:opacity-60" onClick={() => setView("home")}>
           Ma-Samba DIA
         </button>
-        <button
-          className="hover:opacity-60"
-          onClick={() => setView(view === "info" ? "home" : "info")}
-        >
+        <button className="hover:opacity-60" onClick={() => setView(view === "info" ? "home" : "info")}>
           info
         </button>
         <button className="hover:opacity-60" onClick={() => setDark(!dark)}>
@@ -277,23 +291,27 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile stack */}
-          <div className="flex flex-col md:hidden px-5 pt-3 gap-6">
+          {/* Mobile stack — sans contact */}
+          <div className="flex flex-col md:hidden px-5 pt-3 gap-6 overflow-hidden">
             <p className="leading-relaxed">{BIO}</p>
             <div>
               {SKILLS.map((s) => (
                 <div key={s}>{s}</div>
               ))}
             </div>
-            <div>
-              <ContactBlock />
-            </div>
           </div>
 
           <div className="px-5 pb-5 pt-2 shrink-0 flex justify-between items-end">
             <div>
               <div className="text-[13px] mb-2">Projets :</div>
-              <ProjectList onOpen={openProject} />
+              {/* Desktop */}
+              <div className="hidden md:block">
+                <ProjectList onOpen={openProject} />
+              </div>
+              {/* Mobile — shortName pour NSC */}
+              <div className="md:hidden">
+                <ProjectList onOpen={openProject} mobile />
+              </div>
             </div>
             <div className="text-[11px] shrink-0 ml-4">©Ma-Samba Dia. All Rights Reserved.</div>
           </div>
@@ -317,14 +335,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile back + contact */}
-          <div className="flex md:hidden px-5 pt-2 pb-3 justify-between">
+          {/* Mobile back — sans contact */}
+          <div className="flex md:hidden px-5 pt-2 pb-3">
             <button className="hover:opacity-60" onClick={() => setView("home")}>
               ← Retour
             </button>
-            <div className="text-right">
-              <ContactBlock />
-            </div>
           </div>
 
           {/* Overlay — desktop */}
@@ -352,17 +367,9 @@ export default function Home() {
                 ))}
               </div>
               <div className="mt-auto flex items-center gap-8">
-                <button className="hover:opacity-60" onClick={prev}>
-                  ←——
-                </button>
-                {totalImages > 1 && (
-                  <span>
-                    {imgIdx + 1}/{totalImages}
-                  </span>
-                )}
-                <button className="hover:opacity-60" onClick={next}>
-                  ——→
-                </button>
+                <button className="hover:opacity-60" onClick={prev}>←——</button>
+                {totalImages > 1 && <span>{imgIdx + 1}/{totalImages}</span>}
+                <button className="hover:opacity-60" onClick={next}>——→</button>
               </div>
             </div>
             <div className="h-full flex items-end justify-end overflow-hidden">
@@ -391,25 +398,18 @@ export default function Home() {
                 className="w-full h-64 object-contain"
               />
             )}
-            <div className="flex items-center gap-8">
-              <button className="hover:opacity-60" onClick={prev}>
-                ←——
-              </button>
+            {/* Flèches pleine largeur, compteur centré */}
+            <div className="flex items-center">
+              <button className="hover:opacity-60" onClick={prev}>←——</button>
               {totalImages > 1 && (
-                <span>
-                  {imgIdx + 1}/{totalImages}
-                </span>
+                <span className="flex-1 text-center">{imgIdx + 1}/{totalImages}</span>
               )}
-              <button className="hover:opacity-60" onClick={next}>
-                ——→
-              </button>
+              <button className="hover:opacity-60" onClick={next}>——→</button>
             </div>
             <div>
               <div className="mb-2">Description :</div>
               {PROJECTS[active].description.map((para, i) => (
-                <p key={i} className="leading-relaxed mb-2 last:mb-0">
-                  {para}
-                </p>
+                <p key={i} className="leading-relaxed mb-2 last:mb-0">{para}</p>
               ))}
             </div>
             <div>
@@ -425,25 +425,21 @@ export default function Home() {
       {/* ── INFO ── */}
       {view === "info" && (
         <>
-          {/* Desktop grid */}
-          <div className="hidden md:grid md:flex-1 px-5 pt-3 overflow-hidden" style={COLS}>
-            <div className="flex items-center">
-              {INFO_PHOTO ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={INFO_PHOTO} alt="" className="w-36 h-44 object-cover" />
-              ) : (
-                <div className={`w-36 h-44 ${photo}`} />
-              )}
-            </div>
-            <div className="col-span-2 flex items-center justify-center">
-              <p className="leading-relaxed max-w-xs">{BIO}</p>
-            </div>
-            <div>
+          {/* Desktop : photo + bio + contact sous le bio */}
+          <div className="hidden md:flex md:flex-1 px-5 pt-8 gap-10 items-start overflow-hidden">
+            {INFO_PHOTO ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={INFO_PHOTO} alt="" className="w-36 h-44 object-cover shrink-0" />
+            ) : (
+              <div className={`w-36 h-44 shrink-0 ${photo}`} />
+            )}
+            <div className="flex flex-col gap-6 max-w-sm">
+              <p className="leading-relaxed">{BIO}</p>
               <ContactBlock />
             </div>
           </div>
 
-          {/* Mobile stack */}
+          {/* Mobile : photo + bio + contact, sans liste projets */}
           <div className="flex flex-col md:hidden px-5 pt-3 gap-6">
             <div className="flex gap-4 items-start">
               {INFO_PHOTO ? (
@@ -454,16 +450,12 @@ export default function Home() {
               )}
               <p className="leading-relaxed">{BIO}</p>
             </div>
-            <div>
-              <ContactBlock />
-            </div>
+            <ContactBlock />
           </div>
 
-          <div className="px-5 pb-5 pt-2 shrink-0 flex justify-between items-end">
-            <div>
-              <ProjectList onOpen={openProject} />
-            </div>
-            <div className="text-[11px] shrink-0 ml-4">©Ma-Samba Dia. All Rights Reserved.</div>
+          {/* Bottom — copyright seulement */}
+          <div className="px-5 pb-5 pt-2 shrink-0 flex justify-end items-end">
+            <div className="text-[11px]">©Ma-Samba Dia. All Rights Reserved.</div>
           </div>
         </>
       )}
