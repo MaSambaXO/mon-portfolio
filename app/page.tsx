@@ -80,34 +80,10 @@ const PROJECTS: Project[] = [
     date: "Juin 2023",
     description: [
       "Breathe! est un projet européen de médiation culturelle autour des objets africains conservés dans les collections de musées européens. J'ai été chargé par l'association Alter-Natives de réaliser le site du projet.",
-      "Développé en collaboration avec une graphiste senior, le site transpose l'identité visuelle du projet dans un environnement numérique accessible, lisible et responsive. L'objectif était de valoriser les contenus pédagogiques et les recherches du programme à travers une expérience de consultation claire et engageante.",
+      "Développé à partir de la direction artistique conçue par la graphiste senior Elsa Perry, le site transpose l'identité visuelle du projet dans un environnement numérique accessible, lisible et responsive. Mon travail a consisté à adapter cette identité au support web afin de valoriser les contenus pédagogiques et les recherches du programme à travers une expérience de consultation claire et engageante.",
     ],
     role: ["Web design"],
     images: ["/projets/Breathe-1.webp","/projets/Breathe-2.webp","/projets/Breathe-3.webp","/projets/Breathe-4.webp"],
-  },
-
-  {
-    name: "Mémoire",
-    subtitle: "Recherche & Conceptualisation",
-    date: "Janvier 2025",
-    description: [
-      "Strive est un projet de mémoire autour des interfaces diégétiques dans les jeux vidéo de science-fiction. Inspiré par des œuvres comme Mirror's Edge, Dead Space ou Cyberpunk 2077, le projet explore la manière dont une interface peut participer à la construction d'un univers plutôt que se limiter à transmettre de l'information.",
-      "À travers la conception d'un jeu fictif, d'interfaces et de systèmes visuels, Strive cherche à intégrer la narration, le gameplay et l'identité visuelle dans une expérience cohérente.",
-    ],
-    role: ["Recherche", "Direction artistique", "Game design"],
-    images: ["/projets/Strive-1.webp","/projets/Strive-2.webp","/projets/Strive-3.webp","/projets/Strive-4.webp"],
-  },
-
-  {
-    name: "Explor'émoi",
-    subtitle: "Recherche & Conceptualisation",
-    date: "Octobre 2025",
-    description: [
-      "Explor'Émoi est un projet de médiation numérique conçu pour le tiers-lieu Comme Vous Émoi à Montreuil. Le projet réinvente la découverte d'un espace culturel à travers les codes du jeu vidéo et de la narration interactive.",
-      "L'expérience prend la forme d'un visual novel dans lequel les visiteurs rencontrent différents personnages associés aux espaces et activités du lieu. Le projet explore la manière dont le design interactif peut transformer l'information en expérience.",
-    ],
-    role: ["Recherche", "Branding", "Web design"],
-    images: ["/projets/Explor'Emoi-1.webp","/projets/Explor'Emoi-2.webp","/projets/Explor'Emoi-3.webp","/projets/Explor'Emoi-4.webp"],
   },
 
   {
